@@ -3,6 +3,9 @@ import './App.css';
 import { Typography, TextField, Button } from '@mui/material';
 import User from '../User/User';
 
+//The base URL for the API.
+const ApiURL = "https://gorest.co.in/public/v1/users";
+
 function App() {
 
   //useState for the current Search Term. Used to find the results from the API later.
@@ -11,6 +14,15 @@ function App() {
   const [users, setUsers] = useState([]);
   //Is true or false depending on the length of the current search. (This is used to enable/disable searching)
   const isDisabled = searchTerm.length <= 3;
+
+  //Asynchronous search method, used to fetch users from the API.
+  const searchUsers = async (name) => {
+    const response = await fetch(`${ApiURL}?name=${name}`);
+    const results = await response.json();
+
+    //Sets the users to all the data within the results variable.
+    setUsers(results.data);
+  };
 
   return (
     <>
@@ -32,6 +44,7 @@ function App() {
       </div>
 
       {
+        //Checks if the users (results) is greater than 0.
         users?.length > 0 
         ? (
           <div>
