@@ -24,6 +24,13 @@ function App() {
     setUsers(results.data);
   };
 
+  //Method for checking if the enter key has been pressed (Equivalent to pressing the search button)
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && isDisabled) {
+      searchUsers(searchTerm);
+    }
+  }
+
   return (
     <>
       <Typography variant='h2'>Lookup App</Typography>
@@ -34,12 +41,14 @@ function App() {
           label="Enter name"
           variant="outlined"
           value={searchTerm}
+          onKeyDown={handleKeyDown}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
 
         <Button
           variant='contained'
           disabled={isDisabled}
+          onClick={() => searchUsers(searchTerm)}
         >Search</Button>
       </div>
 
