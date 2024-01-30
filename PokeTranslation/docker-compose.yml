@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+  dotnet-api:
+    image: knphilip/poketranslation:latest
+    build:
+      context: .
+      dockerfile: PokeTranslation/Dockerfile
+    ports:
+      - 6001:8080
+    depends_on:
+      - sql-db
+  sql-db:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=postgrespw
+    ports:
+      - 5432:5432
+    volumes:
+      - /var/lib/postgresql/data
